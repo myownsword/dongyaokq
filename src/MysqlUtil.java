@@ -145,7 +145,7 @@ public class MysqlUtil {
             conn = DriverManager.getConnection(url);
             // Statement里面带有很多方法，比如executeUpdate可以实现插入，更新和删除等
             Statement stmt = conn.createStatement();
-            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
+            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id  group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
             ResultSet rs = stmt.executeQuery(sql);// executeQuery会返回结果的集合，否则返回空值
 
             List<Kq_Record> list_rc = new ArrayList<Kq_Record>() ;
@@ -1421,7 +1421,7 @@ public class MysqlUtil {
                 || (kq_start_time_cal.get(Calendar.HOUR_OF_DAY) == 8 && kq_start_time_cal.get(Calendar.MINUTE)<30)) {
             if(!kq_end_time_cal.equals(calendar)) {
                 if(kq_end_time_cal.get(Calendar.HOUR_OF_DAY)>=17 ) {
-
+                    changbai++;
                     //判断前一天是否是白
                     if(index!=0) {
                         Map<String, Object> stringObjectMapBefore= kq_date_list.get(index-1);
@@ -1433,8 +1433,9 @@ public class MysqlUtil {
                         if("休".equals(stringObjectMapBefore.get("type"))){
                             int _week = kq_time_cal_before.get(Calendar.DAY_OF_WEEK) ;
                             if (_week == Calendar.SUNDAY || _week == Calendar.SATURDAY) {
+//                                changbai++;
                             }else{
-                                changbai--;
+//                                changbai--;
                             }
                         }else{
 
@@ -1492,7 +1493,7 @@ public class MysqlUtil {
                                     if (_week2 == Calendar.SUNDAY || _week2 == Calendar.SATURDAY) {
                                         changbai++;
                                     } else {
-                                        changbai--;
+//                                        changbai--;
                                     }
                                 }else{
 
@@ -1568,7 +1569,7 @@ public class MysqlUtil {
                                                             if (_week == Calendar.SUNDAY || _week == Calendar.SATURDAY) {
                                                                 changbai++;
                                                             }else{
-                                                                changbai--;
+//                                                                changbai--;
                                                             }
                                                         }else{
                                                             //判断夜休第三天夜班
