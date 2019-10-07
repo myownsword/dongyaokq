@@ -145,7 +145,7 @@ public class MysqlUtil {
             conn = DriverManager.getConnection(url);
             // Statement里面带有很多方法，比如executeUpdate可以实现插入，更新和删除等
             Statement stmt = conn.createStatement();
-            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
+            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id and t.name='刘贞' group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
             ResultSet rs = stmt.executeQuery(sql);// executeQuery会返回结果的集合，否则返回空值
 
             List<Kq_Record> list_rc = new ArrayList<Kq_Record>() ;
@@ -616,7 +616,7 @@ public class MysqlUtil {
                         if(i1<kq_record_person.getKq_date_list().size()-3) {
                             Map<String, Object> stringObjectMapNext3 = kq_record_person.getKq_date_list().get(i1 + 3);
                             if("休".equals(stringObjectMapNext3.get("type"))) {
-                                break;
+                                continue;
                             }
                             Date kq_start_time_next = timeFt2.parse(stringObjectMapNext3.get("kq_start_time").toString());
                             Date kq_end_time_next = null;
@@ -683,54 +683,56 @@ public class MysqlUtil {
                                         long wan_jiaban = kq_end_time_cal_next.getTimeInMillis()-base_jiaban_end_time_cal.getTimeInMillis();
                                         long zao_jiaban = base_jiaban_start_time_cal.getTimeInMillis()-kq_start_time_cal_next.getTimeInMillis();
                                         //早上加班超过一小时
-                                        if(zao_jiaban>60*60*1000) {
+                                        if(zao_jiaban>59*60*1000) {
+                                            Jia_Ban_Bean jia_ban_bean2 = new Jia_Ban_Bean();
                                             //岗位名称
-                                            jia_ban_bean.setPosm_name("");
+                                            jia_ban_bean2.setPosm_name("");
                                             //加班人数
-                                            jia_ban_bean.setJia_ban_ren_shu("1");
+                                            jia_ban_bean2.setJia_ban_ren_shu("1");
                                             //人员编码
-                                            jia_ban_bean.setId(kq_record_person.getId());
+                                            jia_ban_bean2.setId(kq_record_person.getId());
                                             //加班人员名单
-                                            jia_ban_bean.setName(kq_record_person.getName());
+                                            jia_ban_bean2.setName(kq_record_person.getName());
                                             //加班类型
-                                            jia_ban_bean.setJia_ban_type("延时(150%)");
+                                            jia_ban_bean2.setJia_ban_type("延时(150%)");
                                             //加班日期
-                                            jia_ban_bean.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
-                                            jia_ban_bean.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
+                                            jia_ban_bean2.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
+                                            jia_ban_bean2.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
 
                                             String jia_ban_time = month+"月"+day+"月"+hour_start+":"+minute_start+"-8:30";
 
-                                            jia_ban_bean.setJia_ban_time(jia_ban_time);
-                                            jia_ban_bean.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
-                                            jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
-                                            jia_ban_bean.setBuchangfangshi("支付加班费");
+                                            jia_ban_bean2.setJia_ban_time(jia_ban_time);
+                                            jia_ban_bean2.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
+                                            jia_ban_bean2.setSalay(jia_ban_bean2.getSalay_days()*jia_ban_bean2.getJia_ban_days());
+                                            jia_ban_bean2.setBuchangfangshi("支付加班费");
 
-                                            listResult.add(jia_ban_bean);
+                                            listResult.add(jia_ban_bean2);
                                         }
                                         //晚上加班超过18:10
                                         if(wan_jiaban>70*60*1000) {
+                                            Jia_Ban_Bean jia_ban_bean3 = new Jia_Ban_Bean();
                                             //岗位名称
-                                            jia_ban_bean.setPosm_name("");
+                                            jia_ban_bean3.setPosm_name("");
                                             //加班人数
-                                            jia_ban_bean.setJia_ban_ren_shu("1");
+                                            jia_ban_bean3.setJia_ban_ren_shu("1");
                                             //人员编码
-                                            jia_ban_bean.setId(kq_record_person.getId());
+                                            jia_ban_bean3.setId(kq_record_person.getId());
                                             //加班人员名单
-                                            jia_ban_bean.setName(kq_record_person.getName());
+                                            jia_ban_bean3.setName(kq_record_person.getName());
                                             //加班类型
-                                            jia_ban_bean.setJia_ban_type("延时(150%)");
+                                            jia_ban_bean3.setJia_ban_type("延时(150%)");
                                             //加班日期
-                                            jia_ban_bean.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
-                                            jia_ban_bean.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
+                                            jia_ban_bean3.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
+                                            jia_ban_bean3.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
 
                                             String jia_ban_time = month+"月"+day+"月17:00-"+hour_end+":"+String.format("%02d", minute_end);
 
-                                            jia_ban_bean.setJia_ban_time(jia_ban_time);
-                                            jia_ban_bean.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
-                                            jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
-                                            jia_ban_bean.setBuchangfangshi("支付加班费");
+                                            jia_ban_bean3.setJia_ban_time(jia_ban_time);
+                                            jia_ban_bean3.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
+                                            jia_ban_bean3.setSalay(jia_ban_bean3.getSalay_days()*jia_ban_bean3.getJia_ban_days());
+                                            jia_ban_bean3.setBuchangfangshi("支付加班费");
 
-                                            listResult.add(jia_ban_bean);
+                                            listResult.add(jia_ban_bean3);
                                         }
 
 
@@ -820,54 +822,56 @@ public class MysqlUtil {
                         long wan_jiaban = kq_end_time_cal.getTimeInMillis()-base_jiaban_end_time_cal.getTimeInMillis();
                         long zao_jiaban = base_jiaban_start_time_cal.getTimeInMillis()-kq_start_time_cal.getTimeInMillis();
                         //早上加班超过一小时
-                        if(zao_jiaban>60*60*1000) {
+                        if(zao_jiaban>59*60*1000) {
+                            Jia_Ban_Bean jia_ban_bean2 = new Jia_Ban_Bean();
                             //岗位名称
-                            jia_ban_bean.setPosm_name("");
+                            jia_ban_bean2.setPosm_name("");
                             //加班人数
-                            jia_ban_bean.setJia_ban_ren_shu("1");
+                            jia_ban_bean2.setJia_ban_ren_shu("1");
                             //人员编码
-                            jia_ban_bean.setId(kq_record_person.getId());
+                            jia_ban_bean2.setId(kq_record_person.getId());
                             //加班人员名单
-                            jia_ban_bean.setName(kq_record_person.getName());
+                            jia_ban_bean2.setName(kq_record_person.getName());
                             //加班类型
-                            jia_ban_bean.setJia_ban_type("延时(150%)");
+                            jia_ban_bean2.setJia_ban_type("延时(150%)");
                             //加班日期
-                            jia_ban_bean.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
-                            jia_ban_bean.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
+                            jia_ban_bean2.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
+                            jia_ban_bean2.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
                             String jia_ban_time = month+"月"+day+"月"+hour_start+":"+minute_start+"-8:30";
 
-                            jia_ban_bean.setJia_ban_time(jia_ban_time);
-                            jia_ban_bean.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
-                            jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
-                            jia_ban_bean.setBuchangfangshi("支付加班费");
+                            jia_ban_bean2.setJia_ban_time(jia_ban_time);
+                            jia_ban_bean2.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
+                            jia_ban_bean2.setSalay(jia_ban_bean2.getSalay_days()*jia_ban_bean2.getJia_ban_days());
+                            jia_ban_bean2.setBuchangfangshi("支付加班费");
 
-                            listResult.add(jia_ban_bean);
+                            listResult.add(jia_ban_bean2);
                         }
                         //晚上加班超过18:10
                         if(wan_jiaban>70*60*1000) {
+                            Jia_Ban_Bean jia_ban_bean3 = new Jia_Ban_Bean();
                             //岗位名称
-                            jia_ban_bean.setPosm_name("");
+                            jia_ban_bean3.setPosm_name("");
                             //加班人数
-                            jia_ban_bean.setJia_ban_ren_shu("1");
+                            jia_ban_bean3.setJia_ban_ren_shu("1");
                             //人员编码
-                            jia_ban_bean.setId(kq_record_person.getId());
+                            jia_ban_bean3.setId(kq_record_person.getId());
                             //加班人员名单
-                            jia_ban_bean.setName(kq_record_person.getName());
+                            jia_ban_bean3.setName(kq_record_person.getName());
                             //加班类型
-                            jia_ban_bean.setJia_ban_type("延时(150%)");
+                            jia_ban_bean3.setJia_ban_type("延时(150%)");
                             //加班日期
-                            jia_ban_bean.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
-                            jia_ban_bean.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
+                            jia_ban_bean3.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
+                            jia_ban_bean3.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
                             String jia_ban_time = month+"月"+day+"月17:00-"+hour_end+":"+String.format("%02d", minute_end);
 
-                            jia_ban_bean.setJia_ban_time(jia_ban_time);
-                            jia_ban_bean.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
-                            jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
-                            jia_ban_bean.setBuchangfangshi("支付加班费");
+                            jia_ban_bean3.setJia_ban_time(jia_ban_time);
+                            jia_ban_bean3.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
+                            jia_ban_bean3.setSalay(jia_ban_bean3.getSalay_days()*jia_ban_bean3.getJia_ban_days());
+                            jia_ban_bean3.setBuchangfangshi("支付加班费");
 
-                            listResult.add(jia_ban_bean);
+                            listResult.add(jia_ban_bean3);
                         }
 
                     }else{
@@ -882,7 +886,7 @@ public class MysqlUtil {
                         int minute_end = kq_end_time_cal.get(Calendar.MINUTE);
 
                         //早上加班超过一小时
-                        if(zao_jiaban>60*60*1000) {
+                        if(zao_jiaban>59*60*1000) {
                             //岗位名称
                             jia_ban_bean.setPosm_name("");
                             //加班人数
@@ -908,28 +912,29 @@ public class MysqlUtil {
                         }
                         //晚上加班超过18:10
                         if(wan_jiaban>70*60*1000) {
+                            Jia_Ban_Bean jia_ban_bean2 = new Jia_Ban_Bean();
                             //岗位名称
-                            jia_ban_bean.setPosm_name("");
+                            jia_ban_bean2.setPosm_name("");
                             //加班人数
-                            jia_ban_bean.setJia_ban_ren_shu("1");
+                            jia_ban_bean2.setJia_ban_ren_shu("1");
                             //人员编码
-                            jia_ban_bean.setId(kq_record_person.getId());
+                            jia_ban_bean2.setId(kq_record_person.getId());
                             //加班人员名单
-                            jia_ban_bean.setName(kq_record_person.getName());
+                            jia_ban_bean2.setName(kq_record_person.getName());
                             //加班类型
-                            jia_ban_bean.setJia_ban_type("延时(150%)");
+                            jia_ban_bean2.setJia_ban_type("延时(150%)");
                             //加班日期
-                            jia_ban_bean.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
-                            jia_ban_bean.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
+                            jia_ban_bean2.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
+                            jia_ban_bean2.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
                             String jia_ban_time = month+"月"+day+"月17:00-"+hour_end+":"+String.format("%02d", minute_end);
 
-                            jia_ban_bean.setJia_ban_time(jia_ban_time);
-                            jia_ban_bean.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
-                            jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
-                            jia_ban_bean.setBuchangfangshi("支付加班费");
+                            jia_ban_bean2.setJia_ban_time(jia_ban_time);
+                            jia_ban_bean2.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
+                            jia_ban_bean2.setSalay(jia_ban_bean2.getSalay_days()*jia_ban_bean2.getJia_ban_days());
+                            jia_ban_bean2.setBuchangfangshi("支付加班费");
 
-                            listResult.add(jia_ban_bean);
+                            listResult.add(jia_ban_bean2);
                         }
                     }
 
@@ -988,42 +993,44 @@ public class MysqlUtil {
 
                     for (String s : three_salay) {
                         if ((yyyy_mm + "-" + s).equals(stringObjectMap.get("kq_time"))) {
+                            Jia_Ban_Bean jia_ban_bean2 = new Jia_Ban_Bean();
                             //岗位名称
-                            jia_ban_bean.setPosm_name("");
+                            jia_ban_bean2.setPosm_name("");
                             //加班人数
-                            jia_ban_bean.setJia_ban_ren_shu("1");
+                            jia_ban_bean2.setJia_ban_ren_shu("1");
                             //人员编码
-                            jia_ban_bean.setId(kq_record_person.getId());
+                            jia_ban_bean2.setId(kq_record_person.getId());
                             //加班人员名单
-                            jia_ban_bean.setName(kq_record_person.getName());
+                            jia_ban_bean2.setName(kq_record_person.getName());
                             //加班类型
-                            jia_ban_bean.setJia_ban_type("法定(300%)");
+                            jia_ban_bean2.setJia_ban_type("法定(300%)");
                             //加班日期
 //                            jia_ban_bean.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
 //                            jia_ban_bean.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
                             String jia_ban_time_3bei = month + "月" + day + "月08:30-17:00";
-                            jia_ban_bean.setJia_ban_time(jia_ban_time_3bei);
-                            jia_ban_bean.setJia_ban_days(3);
-                            jia_ban_bean.setSalay(jia_ban_bean.getSalay_days() * jia_ban_bean.getJia_ban_days());
-                            jia_ban_bean.setBuchangfangshi("支付加班费");
+                            jia_ban_bean2.setJia_ban_time(jia_ban_time_3bei);
+                            jia_ban_bean2.setJia_ban_days(3);
+                            jia_ban_bean2.setSalay(jia_ban_bean2.getSalay_days() * jia_ban_bean2.getJia_ban_days());
+                            jia_ban_bean2.setBuchangfangshi("支付加班费");
 
-                            listResult.add(jia_ban_bean);
+                            listResult.add(jia_ban_bean2);
                         }
                         //白夜休休-夜
                         if (i1 < kq_record_person.getKq_date_list().size() - 1) {
                             Map<String, Object> stringObjectMap_next = kq_record_person.getKq_date_list().get(i1 + 1);
                             if ((yyyy_mm + "-" + s).equals(stringObjectMap_next.get("kq_time"))) {
+                                Jia_Ban_Bean jia_ban_bean3 = new Jia_Ban_Bean();
                                 //岗位名称
-                                jia_ban_bean.setPosm_name("");
+                                jia_ban_bean3.setPosm_name("");
                                 //加班人数
-                                jia_ban_bean.setJia_ban_ren_shu("1");
+                                jia_ban_bean3.setJia_ban_ren_shu("1");
                                 //人员编码
-                                jia_ban_bean.setId(kq_record_person.getId());
+                                jia_ban_bean3.setId(kq_record_person.getId());
                                 //加班人员名单
-                                jia_ban_bean.setName(kq_record_person.getName());
+                                jia_ban_bean3.setName(kq_record_person.getName());
                                 //加班类型
-                                jia_ban_bean.setJia_ban_type("法定(300%)");
+                                jia_ban_bean3.setJia_ban_type("法定(300%)");
                                 //加班日期
 //                                jia_ban_bean.setJia_ban_start_time(stringObjectMap_next.get("kq_start_time").toString());
 //                                jia_ban_bean.setJia_ban_end_time(stringObjectMap_next.get("kq_end_time").toString());
@@ -1036,12 +1043,12 @@ public class MysqlUtil {
                                 int day_next = kq_time_cal_next.get(Calendar.DAY_OF_MONTH);
 
                                 String jia_ban_time_3bei = month_next + "月" + day_next + "月08:30-17:00";
-                                jia_ban_bean.setJia_ban_time(jia_ban_time_3bei);
-                                jia_ban_bean.setJia_ban_days(3);
-                                jia_ban_bean.setSalay(jia_ban_bean.getSalay_days() * jia_ban_bean.getJia_ban_days());
-                                jia_ban_bean.setBuchangfangshi("支付加班费");
+                                jia_ban_bean3.setJia_ban_time(jia_ban_time_3bei);
+                                jia_ban_bean3.setJia_ban_days(3);
+                                jia_ban_bean3.setSalay(jia_ban_bean3.getSalay_days() * jia_ban_bean3.getJia_ban_days());
+                                jia_ban_bean3.setBuchangfangshi("支付加班费");
 
-                                listResult.add(jia_ban_bean);
+                                listResult.add(jia_ban_bean3);
                             }
 
                         }
@@ -1414,6 +1421,52 @@ public class MysqlUtil {
                 || (kq_start_time_cal.get(Calendar.HOUR_OF_DAY) == 8 && kq_start_time_cal.get(Calendar.MINUTE)<30)) {
             if(!kq_end_time_cal.equals(calendar)) {
                 if(kq_end_time_cal.get(Calendar.HOUR_OF_DAY)>=17 ) {
+
+                    //判断前一天是否是白
+                    if(index!=0) {
+                        Map<String, Object> stringObjectMapBefore= kq_date_list.get(index-1);
+
+                        Date kq_time_before = timeFt.parse(stringObjectMapBefore.get("kq_time").toString());
+                        Calendar kq_time_cal_before=Calendar.getInstance();
+                        kq_time_cal_before.setTime(kq_time_before);
+
+                        if("休".equals(stringObjectMapBefore.get("type"))){
+                            int _week = kq_time_cal_before.get(Calendar.DAY_OF_WEEK) ;
+                            if (_week == Calendar.SUNDAY || _week == Calendar.SATURDAY) {
+                            }else{
+                                changbai--;
+                            }
+                        }else{
+
+                            Date kq_start_time_before = timeFt2.parse(stringObjectMapBefore.get("kq_start_time").toString());
+                            Date kq_end_time_before = null;
+                            if(stringObjectMapBefore.get("kq_end_time")!=null) {
+                                kq_end_time_before = timeFt2.parse(stringObjectMapBefore.get("kq_end_time").toString());
+                            }
+
+                            Calendar kq_start_time_cal_before=Calendar.getInstance();
+                            kq_start_time_cal_before.setTime(kq_start_time_before);
+                            Calendar kq_end_time_cal_before=(Calendar)calendar.clone();;
+                            if(kq_end_time_before!=null) {
+                                kq_end_time_cal_before.setTime(kq_end_time_before);
+                                //判断最早和最晚打卡时间大约4小时 否则为无效打卡
+                                if (kq_end_time_cal_before.getTimeInMillis()-kq_start_time_cal_before.getTimeInMillis()<4*60*60*1000) {
+                                    kq_end_time_cal_before = (Calendar)calendar.clone();
+                                }
+                            }
+
+                            if(kq_start_time_cal_before.get(Calendar.HOUR_OF_DAY) < 8
+                                    || (kq_start_time_cal_before.get(Calendar.HOUR_OF_DAY) == 8 && kq_start_time_cal_before.get(Calendar.MINUTE)<30)) {
+                                if(!kq_start_time_cal_before.equals(calendar)) {
+                                    if (kq_end_time_cal_before.get(Calendar.HOUR_OF_DAY) >= 17) {
+                                        changbai++;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
                     //判断如果第二天还是常白 怎当天为常白
                     if(index!=kq_date_list.size()-1) {
                         Map<String, Object> stringObjectMapNext= kq_date_list.get(index+1);
@@ -1427,7 +1480,48 @@ public class MysqlUtil {
                             if (_week == Calendar.SUNDAY || _week == Calendar.SATURDAY) {
                                 changbai++;
                             }else{
-                                changbai--;
+                             //   changbai--;
+                            }
+                            if(index<kq_date_list.size()-2) {
+                                Map<String, Object> stringObjectMapNext2 = kq_date_list.get(index + 2);
+                                Date kq_time_next2 = timeFt.parse(stringObjectMapNext2.get("kq_time").toString());
+                                Calendar kq_time_cal_next2 = Calendar.getInstance();
+                                kq_time_cal_next2.setTime(kq_time_next2);
+                                if ("休".equals(stringObjectMapNext2.get("type"))) {
+                                    int _week2 = kq_time_cal_next2.get(Calendar.DAY_OF_WEEK);
+                                    if (_week2 == Calendar.SUNDAY || _week2 == Calendar.SATURDAY) {
+                                        changbai++;
+                                    } else {
+                                        changbai--;
+                                    }
+                                }else{
+
+                                    Date kq_start_time_next2 = timeFt2.parse(stringObjectMapNext2.get("kq_start_time").toString());
+                                    Date kq_end_time_next2 = null;
+                                    if(stringObjectMapNext2.get("kq_end_time")!=null) {
+                                        kq_end_time_next2 = timeFt2.parse(stringObjectMapNext2.get("kq_end_time").toString());
+                                    }
+
+                                    Calendar kq_start_time_cal_next2=Calendar.getInstance();
+                                    kq_start_time_cal_next2.setTime(kq_start_time_next2);
+                                    Calendar kq_end_time_cal_next2=(Calendar)calendar.clone();;
+                                    if(kq_end_time_next2!=null) {
+                                        kq_end_time_cal_next2.setTime(kq_end_time_next2);
+                                        //判断最早和最晚打卡时间大约4小时 否则为无效打卡
+                                        if (kq_end_time_cal_next2.getTimeInMillis() - kq_start_time_cal_next2.getTimeInMillis() < 4 * 60 * 60 * 1000) {
+                                            kq_end_time_cal_next2 = (Calendar) calendar.clone();
+                                        }
+
+                                        if (kq_start_time_cal_next2.get(Calendar.HOUR_OF_DAY) < 8
+                                                || (kq_start_time_cal_next2.get(Calendar.HOUR_OF_DAY) == 8 && kq_start_time_cal_next2.get(Calendar.MINUTE) < 30)) {
+                                            if (!kq_end_time_cal_next2.equals(calendar)) {
+                                                if (kq_end_time_cal_next2.get(Calendar.HOUR_OF_DAY) >= 17) {
+                                                    changbai++;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }else{
 
@@ -1451,7 +1545,12 @@ public class MysqlUtil {
                                     || (kq_start_time_cal_next.get(Calendar.HOUR_OF_DAY) == 8 && kq_start_time_cal_next.get(Calendar.MINUTE)<30)) {
                                 if(!kq_end_time_cal_next.equals(calendar)) {
                                     if (kq_end_time_cal_next.get(Calendar.HOUR_OF_DAY) >= 17) {
-
+                                        //说明前一天也是白班 后一天还是白班 怎当天判断为白班
+                                        if(changbai>0) {
+                                            changbai=100;
+                                        }else{
+                                            changbai++;
+                                        }
                                         //有可能第二天是白夜休休的白
                                         if(kq_start_time_cal_next.get(Calendar.HOUR_OF_DAY) < 8) {
                                             if (!kq_end_time_cal_next.equals(calendar)) {
@@ -1515,6 +1614,11 @@ public class MysqlUtil {
                                         }
 
                                     }
+                                }
+                            }else{
+                                //如果当天白班 第二天夜班则判定为白夜休休的白
+                                if(kq_start_time_cal_next.get(Calendar.HOUR_OF_DAY)<18 && kq_start_time_cal_next.get(Calendar.HOUR_OF_DAY) >12 && kq_end_time_cal_next.equals(calendar)) {
+                                    changbai=-100;
                                 }
                             }
 

@@ -17,8 +17,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         // 打卡数据导入
-        List<Kq_Record> list = ExcelReaderUtil.readExcel("E:\\IDEA\\workspace\\kaoqin\\src\\全数据.xls");
-        MysqlUtil.saveKqTable(list);
+//        List<Kq_Record> list = ExcelReaderUtil.readExcel("E:\\IDEA\\workspace\\kaoqin\\src\\全数据.xls");
+//        MysqlUtil.saveKqTable(list);
 
         //法定节假日
         String[] three_salay = new String[]{"13"};

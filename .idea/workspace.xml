@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b82afe7d-e4e3-4948-8b01-a4001c14fc45" name="Default Changelist" comment="" />
+    <list default="true" id="b82afe7d-e4e3-4948-8b01-a4001c14fc45" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/kaoqin/2019年9月加班.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/kaoqin/2019年9月加班.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/kaoqin/2019年9月考勤.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/kaoqin/2019年9月考勤.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/kaoqin/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/kaoqin/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/kaoqin/MysqlUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/kaoqin/MysqlUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2019年9月加班.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/2019年9月加班.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/2019年9月考勤.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/2019年9月考勤.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MysqlUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MysqlUtil.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+            <state relative-caret-position="411">
+              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,12 +53,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MysqlUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="147" column="177" selection-start-line="147" selection-start-column="177" selection-end-line="147" selection-end-column="177" />
+            <state relative-caret-position="186">
+              <caret line="150" column="66" lean-forward="true" selection-start-line="150" selection-start-column="66" selection-end-line="150" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#21129#30149#1" />
-                <element signature="e#58080#71852#1" />
+                <element signature="e#20432#20446#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,7 +90,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Kq_Record_Person.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
+            <state relative-caret-position="159">
               <caret line="37" selection-start-line="37" selection-end-line="37" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -94,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ExcelReaderUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10252">
-              <caret line="478" column="42" selection-start-line="478" selection-start-column="42" selection-end-line="478" selection-end-column="42" />
+            <state relative-caret-position="-1367">
+              <caret line="333" column="27" selection-start-line="333" selection-start-column="27" selection-end-line="333" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,12 +140,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Jia_ban_type</find>
-      <find>jia_ban_days</find>
-      <find>刘微</find>
-      <find>== 8 &amp;&amp;</find>
-      <find>cell</find>
-      <find>get_kq_type</find>
       <find>Next</find>
       <find>30</find>
       <find>base_jiaban_end_time_cal</find>
@@ -161,14 +164,26 @@
       <find>kq_end_time</find>
       <find>&lt;18</find>
       <find>size()-3</find>
+      <find>index!=0</find>
+      <find>60*60*1000</find>
+      <find>&gt;60*60*1000</find>
+      <find>kq_start_time_cal_next2</find>
+      <find>get_kq_type</find>
+      <find>=100</find>
     </findStrings>
     <replaceStrings>
       <replace>双休日</replace>
       <replace>+String.format(&quot;%02d&quot;, minute_end)</replace>
+      <replace>59*60*1000</replace>
+      <replace>zao_jiaban&gt;59*60*1000</replace>
+      <replace>&gt;59*60*1000</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -178,8 +193,8 @@
         <option value="$PROJECT_DIR$/src/Kq_Record_Person.java" />
         <option value="$PROJECT_DIR$/src/Jia_Ban_Bean.java" />
         <option value="$PROJECT_DIR$/src/ExcelReaderUtil.java" />
-        <option value="$PROJECT_DIR$/src/MysqlUtil.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/MysqlUtil.java" />
       </list>
     </option>
   </component>
@@ -300,7 +315,7 @@
       <workItem from="1570191653246" duration="9237000" />
       <workItem from="1570234071057" duration="27520000" />
       <workItem from="1570280462866" duration="39795000" />
-      <workItem from="1570410768124" duration="5048000" />
+      <workItem from="1570410768124" duration="16596000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1570414551181</created>
@@ -309,34 +324,40 @@
       <option name="project" value="LOCAL" />
       <updated>1570414551181</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="init">
+      <created>1570416232044</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1570416232044</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81600000" />
+    <option name="totallyTimeSpent" value="93148000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info id="Designer" order="1" />
       <window_info id="JRebel" order="2" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24463807" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.24463807" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="1" weight="0.3286119" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="1" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="MyBatis Sql Log" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="4" />
       <window_info anchor="bottom" id="JRebel Executor" order="5" />
-      <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32956153" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="8" />
       <window_info anchor="bottom" id="Message" order="9" />
-      <window_info anchor="bottom" id="Find" order="10" weight="0.32956153" />
-      <window_info anchor="bottom" id="Run" order="11" weight="0.37340876" />
-      <window_info anchor="bottom" id="Debug" order="12" weight="0.34512022" />
+      <window_info anchor="bottom" id="Find" order="10" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="11" weight="0.37252125" />
+      <window_info anchor="bottom" id="Debug" order="12" weight="0.388102" />
       <window_info anchor="bottom" id="Cvs" order="13" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="14" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="15" />
@@ -349,9 +370,66 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
       <window_info anchor="right" id="Maven" order="6" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info id="Designer" order="1" />
+      <window_info id="JRebel" order="2" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24463807" />
+      <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="1" weight="0.3286119" />
+      <window_info anchor="bottom" id="MyBatis Sql Log" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="4" />
+      <window_info anchor="bottom" id="JRebel Executor" order="5" />
+      <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32956153" />
+      <window_info anchor="bottom" id="FindBugs-IDEA" order="8" />
+      <window_info anchor="bottom" id="Message" order="9" />
+      <window_info anchor="bottom" id="Find" order="10" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="11" visible="true" weight="0.37252125" />
+      <window_info anchor="bottom" id="Debug" order="12" weight="0.388102" />
+      <window_info anchor="bottom" id="Cvs" order="13" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="14" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="15" />
+      <window_info anchor="bottom" id="JRebel Console" order="16" side_tool="true" />
+      <window_info anchor="right" id="Database" order="0" />
+      <window_info anchor="right" id="JRebel Setup Guide" order="1" weight="0.3297587" />
+      <window_info anchor="right" id="Palette&#9;" order="2" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="6" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
@@ -426,27 +504,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Kq_Record_Person.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#713#714#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ExcelReaderUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10252">
-          <caret line="478" column="42" selection-start-line="478" selection-start-column="42" selection-end-line="478" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Jia_Ban_Bean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1474">
@@ -462,22 +519,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MysqlUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/ExcelReaderUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="147" column="177" selection-start-line="147" selection-start-column="177" selection-end-line="147" selection-end-column="177" />
+        <state relative-caret-position="-1367">
+          <caret line="333" column="27" selection-start-line="333" selection-start-column="27" selection-end-line="333" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#21129#30149#1" />
-            <element signature="e#58080#71852#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Kq_Record_Person.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#713#714#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MysqlUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="150" column="66" lean-forward="true" selection-start-line="150" selection-start-column="66" selection-end-line="150" selection-end-column="66" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#20432#20446#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+        <state relative-caret-position="411">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
