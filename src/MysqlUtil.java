@@ -145,7 +145,7 @@ public class MysqlUtil {
             conn = DriverManager.getConnection(url);
             // Statement里面带有很多方法，比如executeUpdate可以实现插入，更新和删除等
             Statement stmt = conn.createStatement();
-            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id and t.name='刘贞' group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
+            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
             ResultSet rs = stmt.executeQuery(sql);// executeQuery会返回结果的集合，否则返回空值
 
             List<Kq_Record> list_rc = new ArrayList<Kq_Record>() ;
@@ -1616,9 +1616,13 @@ public class MysqlUtil {
                                     }
                                 }
                             }else{
-                                //如果当天白班 第二天夜班则判定为白夜休休的白
+                                //如果当天白班 第二天夜班则判定为白夜休休的白 如果当天上班时间为8:30-1700 视为常白 夜班为白夜休休从夜班开始进
                                 if(kq_start_time_cal_next.get(Calendar.HOUR_OF_DAY)<18 && kq_start_time_cal_next.get(Calendar.HOUR_OF_DAY) >12 && kq_end_time_cal_next.equals(calendar)) {
-                                    changbai=-100;
+                                    if((kq_start_time_cal.get(Calendar.HOUR_OF_DAY) == 8 && kq_start_time_cal.get(Calendar.MINUTE)<30) || kq_end_time_cal.get(Calendar.HOUR_OF_DAY)==17){
+                                        changbai=100;
+                                    }else{
+                                        changbai=-100;
+                                    }
                                 }
                             }
 
