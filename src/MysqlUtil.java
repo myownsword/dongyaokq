@@ -1032,7 +1032,7 @@ public class MysqlUtil {
 
                             listResult.add(jia_ban_bean2);
                         }
-                        //白夜休休-夜
+                        //夜休-休
                         if (i1 < kq_record_person.getKq_date_list().size() - 1) {
                             Map<String, Object> stringObjectMap_next = kq_record_person.getKq_date_list().get(i1 + 1);
                             if ((yyyy_mm + "-" + s).equals(stringObjectMap_next.get("kq_time"))) {
@@ -1052,8 +1052,9 @@ public class MysqlUtil {
 //                                jia_ban_bean.setJia_ban_end_time(stringObjectMap_next.get("kq_end_time").toString());
 
 
+                                Date kq_time_next = timeFt.parse(stringObjectMap_next.get("kq_time").toString());
                                 Calendar kq_time_cal_next = Calendar.getInstance();
-                                kq_time_cal_next.setTime(kq_time);
+                                kq_time_cal_next.setTime(kq_time_next);
 
                                 int month_next = kq_time_cal_next.get(Calendar.MONTH) + 1;
                                 int day_next = kq_time_cal_next.get(Calendar.DAY_OF_MONTH);
