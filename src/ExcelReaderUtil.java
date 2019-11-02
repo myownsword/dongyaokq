@@ -1,7 +1,6 @@
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -115,7 +114,7 @@ public class ExcelReaderUtil {
         int   maxDate   =   calendar.getActualMaximum(Calendar.DATE);
         System.out.println(lists);
         //创建新的工作薄
-        Workbook wb = new XSSFWorkbook();
+        HSSFWorkbook wb=new HSSFWorkbook();
         // 创建第一个sheet（页），并命名
         Sheet sheet = wb.createSheet(month+"月");
         // 手动设置列宽。第一个参数表示要为第几列设；，第二个参数表示列的宽度，n为列高的像素数。
@@ -252,6 +251,25 @@ public class ExcelReaderUtil {
                     cell.setCellValue(kq_record_person.getName());
                     cell.setCellStyle(cs2);
                 }else{
+
+//                    if(kq_date_list.get(j-3).get("kq_start_time")!=null || kq_date_list.get(j-3).get("kq_end_time")!=null) {
+//                        //创建绘图对象
+//                        HSSFPatriarch p = (HSSFPatriarch) sheet.createDrawingPatriarch();
+//                        //插入单元格内容
+//                        String kq_start_time = kq_date_list.get(j - 3).get("kq_start_time")==null?"":kq_date_list.get(j - 3).get("kq_start_time").toString().substring(11);
+//                        String kq_end_time = kq_date_list.get(j - 3).get("kq_end_time")==null?"":kq_date_list.get(j - 3).get("kq_end_time").toString().substring(11);
+//                        //获取批注对象
+//                        //(int dx1, int dy1, int dx2, int dy2, short col1, int row1, short col2, int row2)
+//                        //前四个参数是坐标点,后四个参数是编辑和显示批注时的大小.
+//                        HSSFComment comment = p.createComment(new HSSFClientAnchor(0, 0, 0, 0, (short) 3, 3, (short) 15, 6));
+//                        //输入批注信息
+//                        comment.setString(new HSSFRichTextString(kq_start_time+"-"+kq_end_time));
+//                        //添加作者,选中B5单元格,看状态栏
+//                        comment.setAuthor("toad");
+//                        //将批注添加到单元格对象中
+//                        cell.setCellComment(comment);
+//                    }
+
                     if(kq_date_list.get(j-3)!=null&&kq_date_list.get(j-3).get("type")!=null) {
                         cell.setCellValue(kq_date_list.get(j-3).get("type").toString());
                         cell.setCellStyle(cs2);
@@ -261,6 +279,7 @@ public class ExcelReaderUtil {
                             continue;
                         }
                     }
+
                     if("夜".equals(kq_date_list.get(j-3).get("type"))) {
                         cell.setCellStyle(cs_blue);
                         if(j-3!=0) {
@@ -316,7 +335,7 @@ public class ExcelReaderUtil {
             }
         }
 
-        FileOutputStream fileOut = new FileOutputStream("E:\\IDEA\\workspace\\kaoqin\\src\\"+year+"年"+month+"月考勤.xlsx");
+        FileOutputStream fileOut = new FileOutputStream("E:\\IDEA\\workspace\\kaoqin\\src\\"+year+"年"+month+"月考勤.xls");
 
         wb.write(fileOut);
 
