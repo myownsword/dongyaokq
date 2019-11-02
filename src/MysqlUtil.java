@@ -12,6 +12,9 @@ import java.util.*;
 
 
 public class MysqlUtil {
+
+    private static List<Rest_bean> list_rest_rc = new ArrayList<Rest_bean>() ;
+
     public static void main(String[] args) throws Exception {
         Connection conn = null;
         String sql;
@@ -119,7 +122,7 @@ public class MysqlUtil {
      * 分析并导出考勤信息
      *
      */
-    public static void toExcelKqTable(String yyyy_mm,String[] three_salay) throws SQLException {
+    public static void toExcelKqTable(String yyyy_mm,String[] three_salay,String[] exclude_day) throws SQLException {
         Connection conn = null;
         String sql;
         // MySQL的JDBC URL编写方式：jdbc:♠://主机名称：连接端口/数据库的名称?参数=值
@@ -160,6 +163,19 @@ public class MysqlUtil {
                 kr.setKq_end_time(rs.getString("max_date"));
                 list_rc.add(kr);
 
+            }
+
+            //调休bean
+            String sql_rest = "SELECT t.id,t.name,jiaban_time,rest_time from rest_table t";
+            ResultSet rs_rest = stmt.executeQuery(sql_rest);// executeQuery会返回结果的集合，否则返回空值
+
+            while (rs_rest.next()) {
+                Rest_bean rb=new Rest_bean();
+                rb.setId(rs_rest.getString("id"));
+                rb.setName(rs_rest.getString("name"));
+                rb.setJiaban_time(rs_rest.getString("jiaban_time"));
+                rb.setRest_time(rs_rest.getString("rest_time"));
+                list_rest_rc.add(rb);
             }
 
             //按人调整后list
@@ -262,7 +278,7 @@ public class MysqlUtil {
                 }
             }
 
-            List<Jia_Ban_Bean> jia_ban_list = toJiaBanExcel(person_list,yyyy_mm,three_salay);
+            List<Jia_Ban_Bean> jia_ban_list = toJiaBanExcel(person_list,yyyy_mm,three_salay,exclude_day);
 
             //导出加班excel
             ExcelReaderUtil.creatJiaBanExcel(jia_ban_list,yyyy_mm);
@@ -438,7 +454,7 @@ public class MysqlUtil {
      *
      * @return
      */
-    public static List<Jia_Ban_Bean> toJiaBanExcel(List<Kq_Record_Person> person_list,String yyyy_mm,String[] three_salay) throws ParseException {
+    public static List<Jia_Ban_Bean> toJiaBanExcel(List<Kq_Record_Person> person_list,String yyyy_mm,String[] three_salay,String[] exclude_day) throws ParseException {
 //            person_list数据
 ////        000000522
 ////        穆鑫
@@ -779,8 +795,8 @@ public class MysqlUtil {
                     Calendar base_jiaban_end_time_cal=Calendar.getInstance();
                     base_jiaban_end_time_cal.setTime(base_jiaban_end_time);
                     //
-                    if("1".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString()))
-                        || "2".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString()))) {
+                    if("1".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString(),exclude_day,kq_record_person.getId()))
+                        || "2".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString(),exclude_day,kq_record_person.getId()))) {
 
                         //岗位名称
                         jia_ban_bean.setPosm_name("");
@@ -791,7 +807,7 @@ public class MysqlUtil {
                         //加班人员名单
                         jia_ban_bean.setName(kq_record_person.getName());
                         //加班类型
-                        if("1".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString()))) {
+                        if("1".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString(),exclude_day,kq_record_person.getId()))) {
                             jia_ban_bean.setJia_ban_type("双休日(200%)");
                         }else{
                             jia_ban_bean.setJia_ban_type("法定(300%)");
@@ -809,7 +825,7 @@ public class MysqlUtil {
 
                         String jia_ban_time_2bei = month+"月"+day+"月08:30-17:00";
                         jia_ban_bean.setJia_ban_time(jia_ban_time_2bei);
-                        if("1".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString()))) {
+                        if("1".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString(),exclude_day,kq_record_person.getId()))) {
                             jia_ban_bean.setJia_ban_days(2);
                         }else{
                             jia_ban_bean.setJia_ban_days(3);
@@ -1075,7 +1091,7 @@ public class MysqlUtil {
      *
      * 1周末，2法定,0不是
      */
-    public  static  String is_holiday(String yyyy_mm,String[] three_salay,String day) throws ParseException {
+    public  static  String is_holiday(String yyyy_mm,String[] three_salay,String day,String[] exclude_day,String id) throws ParseException {
 
 
         SimpleDateFormat timeFt = new SimpleDateFormat("yyyy-MM-dd");
@@ -1085,6 +1101,12 @@ public class MysqlUtil {
         Calendar kq_time_cal=Calendar.getInstance();
         kq_time_cal.setTime(kq_time);
 
+        for(Rest_bean rb : list_rest_rc) {
+            if(rb.getJiaban_time().equals(day) && id.equals(rb.getId())) {
+                return "0";
+            }
+        }
+
         for (String s : three_salay) {
             if((yyyy_mm+"-"+s).equals(day)) {
                 return "2";
@@ -1093,6 +1115,11 @@ public class MysqlUtil {
 
         int _week = kq_time_cal.get(Calendar.DAY_OF_WEEK) ;
         if (_week == Calendar.SUNDAY || _week == Calendar.SATURDAY) {
+            for (String s : exclude_day) {
+                if((yyyy_mm+"-"+s).equals(day)) {
+                    return "0";
+                }
+            }
             return "1";
         }else{
             return "0";
