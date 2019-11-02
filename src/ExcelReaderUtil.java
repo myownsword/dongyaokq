@@ -1,6 +1,6 @@
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -114,7 +114,7 @@ public class ExcelReaderUtil {
         int   maxDate   =   calendar.getActualMaximum(Calendar.DATE);
         System.out.println(lists);
         //创建新的工作薄
-        HSSFWorkbook wb=new HSSFWorkbook();
+        Workbook wb = new XSSFWorkbook();
         // 创建第一个sheet（页），并命名
         Sheet sheet = wb.createSheet(month+"月");
         // 手动设置列宽。第一个参数表示要为第几列设；，第二个参数表示列的宽度，n为列高的像素数。
@@ -270,6 +270,23 @@ public class ExcelReaderUtil {
 //                        cell.setCellComment(comment);
 //                    }
 
+                    if(kq_date_list.get(j-3).get("kq_start_time")!=null || kq_date_list.get(j-3).get("kq_end_time")!=null) {
+                        String kq_start_time = kq_date_list.get(j - 3).get("kq_start_time")==null?"":kq_date_list.get(j - 3).get("kq_start_time").toString().substring(11);
+                        String kq_end_time = kq_date_list.get(j - 3).get("kq_end_time")==null?"":kq_date_list.get(j - 3).get("kq_end_time").toString().substring(11);
+
+                        CreationHelper factory = wb.getCreationHelper();
+                        Drawing drawing = sheet.createDrawingPatriarch();
+                        ClientAnchor anchor = factory.createClientAnchor();
+                        anchor.setCol1(cell.getColumnIndex());
+                        anchor.setCol2(cell.getColumnIndex()+15);
+                        anchor.setRow1(row3.getRowNum());
+                        anchor.setRow2(row3.getRowNum()+3);
+                        Comment comment = drawing.createCellComment(anchor);
+                        RichTextString str = factory.createRichTextString(kq_start_time+"-"+kq_end_time);
+                        comment.setString(str);
+                        comment.setAuthor("myownsword");
+                        cell.setCellComment(comment);
+                    }
                     if(kq_date_list.get(j-3)!=null&&kq_date_list.get(j-3).get("type")!=null) {
                         cell.setCellValue(kq_date_list.get(j-3).get("type").toString());
                         cell.setCellStyle(cs2);
@@ -279,7 +296,6 @@ public class ExcelReaderUtil {
                             continue;
                         }
                     }
-
                     if("夜".equals(kq_date_list.get(j-3).get("type"))) {
                         cell.setCellStyle(cs_blue);
                         if(j-3!=0) {
@@ -335,7 +351,7 @@ public class ExcelReaderUtil {
             }
         }
 
-        FileOutputStream fileOut = new FileOutputStream("E:\\IDEA\\workspace\\kaoqin\\src\\"+year+"年"+month+"月考勤.xls");
+        FileOutputStream fileOut = new FileOutputStream("E:\\IDEA\\workspace\\kaoqin\\src\\"+year+"年"+month+"月考勤.xlsx");
 
         wb.write(fileOut);
 
