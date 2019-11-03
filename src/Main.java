@@ -18,7 +18,7 @@ public class Main {
 
         // 打卡数据导入
 //        List<Kq_Record> list = ExcelReaderUtil.readExcel("E:\\IDEA\\workspace\\kaoqin\\src\\201910考勤一工段.xls");
-//        MysqlUtil.saveKqTable(list);
+//        MysqlUtil.saveKqTable(list,"2019-10");
 
         //法定节假日
         String[] three_salay = new String[]{"01","02","03","04","05","06","07"};

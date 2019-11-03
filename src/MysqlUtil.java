@@ -72,7 +72,7 @@ public class MysqlUtil {
      * 保存考勤信息
      *
      */
-    public static void saveKqTable(List<Kq_Record> list_rc) throws SQLException {
+    public static void saveKqTable(List<Kq_Record> list_rc,String yyyy_mm) throws SQLException {
         Connection conn = null;
         String sql;
         // MySQL的JDBC URL编写方式：jdbc:♠://主机名称：连接端口/数据库的名称?参数=值
@@ -98,11 +98,18 @@ public class MysqlUtil {
             conn = DriverManager.getConnection(url);
             // Statement里面带有很多方法，比如executeUpdate可以实现插入，更新和删除等
             Statement stmt = conn.createStatement();
-            sql = "delete from kq_table";
+            sql = "DROP TABLE IF EXISTS kq_table_"+yyyy_mm.replaceAll("-","_")+";";
+            stmt.executeUpdate(sql);
+            sql = "CREATE TABLE kq_table_"+yyyy_mm.replaceAll("-","_")+" (" +
+                    "  `id` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL," +
+                    "  `name` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL," +
+                    "  `kq_time` datetime(0) NOT NULL" +
+                    ") ";
+            System.out.println(sql);
             stmt.executeUpdate(sql);
             for (Kq_Record kr : list_rc) {
                 if(StringUtils.isNotEmpty(kr.getId()) && StringUtils.isNotEmpty(kr.getName()) && StringUtils.isNotEmpty(kr.getKq_time())) {
-                    sql = "insert into kq_table(id,name,kq_time) values('"+kr.getId()+"','"+kr.getName()+"',DATE_FORMAT('"+kr.getKq_time()+"', '%Y-%m-%d %H:%i:%s'))";
+                    sql = "insert into kq_table_"+yyyy_mm.replaceAll("-","_")+"(id,name,kq_time) values('"+kr.getId()+"','"+kr.getName()+"',DATE_FORMAT('"+kr.getKq_time()+"', '%Y-%m-%d %H:%i:%s'))";
                     System.out.println(sql);
                     stmt.executeUpdate(sql);
                 }
@@ -148,7 +155,7 @@ public class MysqlUtil {
             conn = DriverManager.getConnection(url);
             // Statement里面带有很多方法，比如executeUpdate可以实现插入，更新和删除等
             Statement stmt = conn.createStatement();
-            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id and t2.kq_type='1'  group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
+            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM kq_table_"+yyyy_mm.replaceAll("-","_")+" t,`user_info` t2 where t.id=t2.id and t2.kq_type='1'  group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
             ResultSet rs = stmt.executeQuery(sql);// executeQuery会返回结果的集合，否则返回空值
 
             List<Kq_Record> list_rc = new ArrayList<Kq_Record>() ;
