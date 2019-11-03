@@ -148,7 +148,7 @@ public class MysqlUtil {
             conn = DriverManager.getConnection(url);
             // Statement里面带有很多方法，比如executeUpdate可以实现插入，更新和删除等
             Statement stmt = conn.createStatement();
-            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id  group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
+            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM `kq_table` t,`user_info` t2 where t.id=t2.id and t2.kq_type='1'  group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
             ResultSet rs = stmt.executeQuery(sql);// executeQuery会返回结果的集合，否则返回空值
 
             List<Kq_Record> list_rc = new ArrayList<Kq_Record>() ;
@@ -511,7 +511,7 @@ public class MysqlUtil {
                                 int month = kq_time_cal.get(Calendar.MONTH) + 1;
                                 int day = kq_time_cal.get(Calendar.DAY_OF_MONTH);
 
-                                String jia_ban_time_2bei = month+"月"+day+"月08:30-17:00";
+                                String jia_ban_time_2bei = month+"月"+day+"日08:30-17:00";
                                 jia_ban_bean.setJia_ban_time(jia_ban_time_2bei);
                                 jia_ban_bean.setJia_ban_days(3);
                                 jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
@@ -546,7 +546,7 @@ public class MysqlUtil {
                                     int month = kq_time_cal_next.get(Calendar.MONTH) + 1;
                                     int day = kq_time_cal_next.get(Calendar.DAY_OF_MONTH);
 
-                                    String jia_ban_time_3bei = month+"月"+day+"月08:30-17:00";
+                                    String jia_ban_time_3bei = month+"月"+day+"日08:30-17:00";
                                     jia_ban_bean.setJia_ban_time(jia_ban_time_3bei);
                                     jia_ban_bean.setJia_ban_days(3);
                                     jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
@@ -583,7 +583,7 @@ public class MysqlUtil {
                                     int month = kq_time_cal_next.get(Calendar.MONTH) + 1;
                                     int day = kq_time_cal_next.get(Calendar.DAY_OF_MONTH);
 
-                                    String jia_ban_time_3bei = month+"月"+day+"月08:30-17:00";
+                                    String jia_ban_time_3bei = month+"月"+day+"日08:30-17:00";
                                     jia_ban_bean.setJia_ban_time(jia_ban_time_3bei);
                                     jia_ban_bean.setJia_ban_days(3);
                                     jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
@@ -619,7 +619,7 @@ public class MysqlUtil {
                                     int month = kq_time_cal_next.get(Calendar.MONTH) + 1;
                                     int day = kq_time_cal_next.get(Calendar.DAY_OF_MONTH);
 
-                                    String jia_ban_time_3bei = month+"月"+day+"月08:30-17:00";
+                                    String jia_ban_time_3bei = month+"月"+day+"日08:30-17:00";
                                     jia_ban_bean.setJia_ban_time(jia_ban_time_3bei);
                                     jia_ban_bean.setJia_ban_days(3);
                                     jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
@@ -688,7 +688,7 @@ public class MysqlUtil {
                                         int hour_end = kq_end_time_cal_next.get(Calendar.HOUR_OF_DAY);
                                         int minute_end = kq_end_time_cal_next.get(Calendar.MINUTE);
 
-                                        String jia_ban_time_2bei = month+"月"+day+"月08:30-17:00";
+                                        String jia_ban_time_2bei = month+"月"+day+"日08:30-17:00";
                                         jia_ban_bean.setJia_ban_time(jia_ban_time_2bei);
                                         jia_ban_bean.setJia_ban_days(1.5);
                                         jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
@@ -715,7 +715,7 @@ public class MysqlUtil {
                                             jia_ban_bean2.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
                                             jia_ban_bean2.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
 
-                                            String jia_ban_time = month+"月"+day+"月"+hour_start+":"+minute_start+"-8:30";
+                                            String jia_ban_time = month+"月"+day+"日"+hour_start+":"+minute_start+"-8:30";
 
                                             jia_ban_bean2.setJia_ban_time(jia_ban_time);
                                             jia_ban_bean2.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
@@ -741,7 +741,7 @@ public class MysqlUtil {
                                             jia_ban_bean3.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
                                             jia_ban_bean3.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
 
-                                            String jia_ban_time = month+"月"+day+"月17:00-"+hour_end+":"+String.format("%02d", minute_end);
+                                            String jia_ban_time = month+"月"+day+"日17:00-"+hour_end+":"+String.format("%02d", minute_end);
 
                                             jia_ban_bean3.setJia_ban_time(jia_ban_time);
                                             jia_ban_bean3.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
@@ -823,7 +823,7 @@ public class MysqlUtil {
                         int hour_end = kq_end_time_cal.get(Calendar.HOUR_OF_DAY);
                         int minute_end = kq_end_time_cal.get(Calendar.MINUTE);
 
-                        String jia_ban_time_2bei = month+"月"+day+"月08:30-17:00";
+                        String jia_ban_time_2bei = month+"月"+day+"日08:30-17:00";
                         jia_ban_bean.setJia_ban_time(jia_ban_time_2bei);
                         if("1".equals(is_holiday(yyyy_mm,three_salay,stringObjectMap.get("kq_time").toString(),exclude_day,kq_record_person.getId()))) {
                             jia_ban_bean.setJia_ban_days(2);
@@ -854,7 +854,7 @@ public class MysqlUtil {
                             jia_ban_bean2.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean2.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"月"+hour_start+":"+minute_start+"-8:30";
+                            String jia_ban_time = month+"月"+day+"日"+hour_start+":"+minute_start+"-8:30";
 
                             jia_ban_bean2.setJia_ban_time(jia_ban_time);
                             jia_ban_bean2.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
@@ -880,7 +880,7 @@ public class MysqlUtil {
                             jia_ban_bean3.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean3.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"月17:00-"+hour_end+":"+String.format("%02d", minute_end);
+                            String jia_ban_time = month+"月"+day+"日17:00-"+hour_end+":"+String.format("%02d", minute_end);
 
                             jia_ban_bean3.setJia_ban_time(jia_ban_time);
                             jia_ban_bean3.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
@@ -917,7 +917,7 @@ public class MysqlUtil {
                             jia_ban_bean.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"月"+hour_start+":"+minute_start+"-8:30";
+                            String jia_ban_time = month+"月"+day+"日"+hour_start+":"+minute_start+"-8:30";
 
                             jia_ban_bean.setJia_ban_time(jia_ban_time);
                             jia_ban_bean.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
@@ -943,7 +943,7 @@ public class MysqlUtil {
                             jia_ban_bean2.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean2.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"月17:00-"+hour_end+":"+String.format("%02d", minute_end);
+                            String jia_ban_time = month+"月"+day+"日17:00-"+hour_end+":"+String.format("%02d", minute_end);
 
                             jia_ban_bean2.setJia_ban_time(jia_ban_time);
                             jia_ban_bean2.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
@@ -998,7 +998,7 @@ public class MysqlUtil {
                     int month = kq_time_cal.get(Calendar.MONTH) + 1;
                     int day = kq_time_cal.get(Calendar.DAY_OF_MONTH);
 
-                    String jia_ban_time_2bei = month+"月"+day+"月17:00-08:30";
+                    String jia_ban_time_2bei = month+"月"+day+"日17:00-08:30";
                     jia_ban_bean.setJia_ban_time(jia_ban_time_2bei);
 
                     jia_ban_bean.setJia_ban_days(0.66);
@@ -1024,7 +1024,7 @@ public class MysqlUtil {
 //                            jia_ban_bean.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
 //                            jia_ban_bean.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time_3bei = month + "月" + day + "月08:30-17:00";
+                            String jia_ban_time_3bei = month + "月" + day + "日08:30-17:00";
                             jia_ban_bean2.setJia_ban_time(jia_ban_time_3bei);
                             jia_ban_bean2.setJia_ban_days(3);
                             jia_ban_bean2.setSalay(jia_ban_bean2.getSalay_days() * jia_ban_bean2.getJia_ban_days());
@@ -1059,7 +1059,7 @@ public class MysqlUtil {
                                 int month_next = kq_time_cal_next.get(Calendar.MONTH) + 1;
                                 int day_next = kq_time_cal_next.get(Calendar.DAY_OF_MONTH);
 
-                                String jia_ban_time_3bei = month_next + "月" + day_next + "月08:30-17:00";
+                                String jia_ban_time_3bei = month_next + "月" + day_next + "日08:30-17:00";
                                 jia_ban_bean3.setJia_ban_time(jia_ban_time_3bei);
                                 jia_ban_bean3.setJia_ban_days(3);
                                 jia_ban_bean3.setSalay(jia_ban_bean3.getSalay_days() * jia_ban_bean3.getJia_ban_days());
