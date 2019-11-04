@@ -155,7 +155,7 @@ public class MysqlUtil {
             conn = DriverManager.getConnection(url);
             // Statement里面带有很多方法，比如executeUpdate可以实现插入，更新和删除等
             Statement stmt = conn.createStatement();
-            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,min(t.kq_time) min_date,max(t.kq_time) max_date FROM kq_table_"+yyyy_mm.replaceAll("-","_")+" t,`user_info` t2 where t.id=t2.id and t2.kq_type='1'  group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
+            sql = "SELECT t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') kq_date,date_format(min(t.kq_time), '%Y-%m-%d %H:%i:00') min_date,date_format(max(t.kq_time), '%Y-%m-%d %H:%i:00') max_date FROM kq_table_"+yyyy_mm.replaceAll("-","_")+" t,`user_info` t2 where t.id=t2.id /*and t2.kq_type='1'*/  and t2.id='00004252' group by t.id,t.name,date_format(t.kq_time,'%Y-%m-%d') order by t.id asc,t.name asc,date_format(t.kq_time,'%Y-%m-%d') asc ";
             ResultSet rs = stmt.executeQuery(sql);// executeQuery会返回结果的集合，否则返回空值
 
             List<Kq_Record> list_rc = new ArrayList<Kq_Record>() ;
@@ -722,10 +722,10 @@ public class MysqlUtil {
                                             jia_ban_bean2.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
                                             jia_ban_bean2.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
 
-                                            String jia_ban_time = month+"月"+day+"日"+hour_start+":"+minute_start+"-8:30";
+                                            String jia_ban_time = month+"月"+day+"日"+String.format("%02d",hour_start)+":"+String.format("%02d",minute_start)+"-8:30";
 
                                             jia_ban_bean2.setJia_ban_time(jia_ban_time);
-                                            jia_ban_bean2.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
+                                            jia_ban_bean2.setJia_ban_days((zao_jiaban-60*1000)*1.5/(8*60*60*1000));
                                             jia_ban_bean2.setSalay(jia_ban_bean2.getSalay_days()*jia_ban_bean2.getJia_ban_days());
                                             jia_ban_bean2.setBuchangfangshi("支付加班费");
 
@@ -748,7 +748,7 @@ public class MysqlUtil {
                                             jia_ban_bean3.setJia_ban_start_time(stringObjectMapNext3.get("kq_start_time").toString());
                                             jia_ban_bean3.setJia_ban_end_time(stringObjectMapNext3.get("kq_end_time").toString());
 
-                                            String jia_ban_time = month+"月"+day+"日17:00-"+hour_end+":"+String.format("%02d", minute_end);
+                                            String jia_ban_time = month+"月"+day+"日17:00-"+String.format("%02d",hour_end)+":"+String.format("%02d", minute_end);
 
                                             jia_ban_bean3.setJia_ban_time(jia_ban_time);
                                             jia_ban_bean3.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
@@ -861,10 +861,10 @@ public class MysqlUtil {
                             jia_ban_bean2.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean2.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"日"+hour_start+":"+minute_start+"-8:30";
+                            String jia_ban_time = month+"月"+day+"日"+String.format("%02d",hour_start)+":"+String.format("%02d",minute_start)+"-8:30";
 
                             jia_ban_bean2.setJia_ban_time(jia_ban_time);
-                            jia_ban_bean2.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
+                            jia_ban_bean2.setJia_ban_days((zao_jiaban-60*1000)*1.5/(8*60*60*1000));
                             jia_ban_bean2.setSalay(jia_ban_bean2.getSalay_days()*jia_ban_bean2.getJia_ban_days());
                             jia_ban_bean2.setBuchangfangshi("支付加班费");
 
@@ -887,7 +887,7 @@ public class MysqlUtil {
                             jia_ban_bean3.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean3.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"日17:00-"+hour_end+":"+String.format("%02d", minute_end);
+                            String jia_ban_time = month+"月"+day+"日17:00-"+String.format("%02d",hour_end)+":"+String.format("%02d", minute_end);
 
                             jia_ban_bean3.setJia_ban_time(jia_ban_time);
                             jia_ban_bean3.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
@@ -924,10 +924,10 @@ public class MysqlUtil {
                             jia_ban_bean.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"日"+hour_start+":"+minute_start+"-8:30";
+                            String jia_ban_time = month+"月"+day+"日"+String.format("%02d",hour_start)+":"+String.format("%02d",minute_start)+"-8:30";
 
                             jia_ban_bean.setJia_ban_time(jia_ban_time);
-                            jia_ban_bean.setJia_ban_days(zao_jiaban*1.5/(8*60*60*1000));
+                            jia_ban_bean.setJia_ban_days((zao_jiaban-60*1000)*1.5/(8*60*60*1000));
                             jia_ban_bean.setSalay(jia_ban_bean.getSalay_days()*jia_ban_bean.getJia_ban_days());
                             jia_ban_bean.setBuchangfangshi("支付加班费");
 
@@ -950,7 +950,7 @@ public class MysqlUtil {
                             jia_ban_bean2.setJia_ban_start_time(stringObjectMap.get("kq_start_time").toString());
                             jia_ban_bean2.setJia_ban_end_time(stringObjectMap.get("kq_end_time").toString());
 
-                            String jia_ban_time = month+"月"+day+"日17:00-"+hour_end+":"+String.format("%02d", minute_end);
+                            String jia_ban_time = month+"月"+day+"日17:00-"+String.format("%02d",hour_end)+":"+String.format("%02d", minute_end);
 
                             jia_ban_bean2.setJia_ban_time(jia_ban_time);
                             jia_ban_bean2.setJia_ban_days(wan_jiaban*1.5/(8*60*60*1000));
